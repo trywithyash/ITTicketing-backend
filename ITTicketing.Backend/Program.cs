@@ -17,7 +17,7 @@ namespace ITTicketing.Backend
             });
 
             builder.Services.AddScoped<ITicketService, TicketService>();
-
+            builder.Services.AddScoped<IUserService, UserService>();
             // Add controllers service registration (MUST be included to find your controllers)
             builder.Services.AddControllers();
             // Add services to the container.
