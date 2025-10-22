@@ -23,6 +23,19 @@ namespace ITTicketing.Backend
             // Add services to the container.
             builder.Services.AddAuthorization();
 
+            const string MyReactPolicy = "_myReactPolicy";
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyReactPolicy,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("http://localhost:3000", "https://localhost:3000")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod()
+                                            .AllowCredentials();
+                                  });
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -35,8 +48,9 @@ namespace ITTicketing.Backend
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseRouting();
             app.UseHttpsRedirection();
+            app.UseCors(MyReactPolicy);
 
             app.UseAuthorization();
 
